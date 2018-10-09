@@ -16,10 +16,10 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 device_x, device_y = 1920, 1080
 
 # 小号 60左右 da 30
-FIGHT_TIME = 30
+FIGHT_TIME = 45
 
 # 刷金币次数
-repeat_times = 175
+repeat_times = 240
 
 c = wda.Client('http://127.0.0.1:8100')
 s = c.session()
@@ -27,31 +27,31 @@ s = c.session()
 #===============================
 # home键在左方
 # 按钮:再次挑战
-# (650,130) (710,310)
+# (1000,370) (1180,530)
 def rechallenge_btn():
-    x = random.uniform(650,710)
-    y = random.uniform(130,310)
+    x = random.uniform(1000,1180)
+    y = random.uniform(370,530)
     logging.info("点击重新挑战按钮 [{},{}]".format(x,y))
     return (x,y)
 # 按钮:闯关 
-# (600,220)  (670,400)
+# (1070,210) (1100,670)
 def start_btn():
-    x = random.uniform(600,670)
-    y = random.uniform(220,400)
+    x = random.uniform(1000,1100)
+    y = random.uniform(370,670)
     logging.info("点击开始按钮 [{},{}]".format(x,y))
     return (x,y)
 # 按钮: 平A 640,115 r=50
 def attack_btn():
-    return circle_btn(640,115,50)
+    return circle_btn(1050,200,50)
 # 按钮: 技能1 660,345 r=35
 def skill_one_btn():
-    return circle_btn(660,345,35)
+    return circle_btn(1090,560,35)
 # 按钮: 技能2 515,255 r=35
 def skill_two_btn():
-    return circle_btn(515,225,35)
+    return circle_btn(850,420,35)
 # 按钮: 技能3 435,120 r=35
 def skill_three_btn():
-    return circle_btn(435,120,35)
+    return circle_btn(720,190,35)
 
 def circle_btn(rx,ry,r):
     x=6666
@@ -145,13 +145,13 @@ if __name__ == '__main__':
             logging.info('round #{}'.format(i + 1))
             try:
                 do_money_work()
-                logging.info("本次共进行{}轮游戏,总用时{}s,预计刷金币{}g".format(mround,(time.time()-mstart)/60,19*mround))
+                logging.info("本次共进行{}轮游戏,总用时{}s,预计刷金币{}g".format(mround,time.time()-mstart,19*mround))
             except Exception as e:
                 print(e)
     except KeyboardInterrupt as k:
         pass
     finally:
-        logging.info("本次共进行{}轮游戏,总用时{}s,预计刷金币{}g".format(mround,(time.time()-mstart)/60,19*mround))
+        logging.info("本次共进行{}轮游戏,总用时{}s,预计刷金币{}g".format(mround,time.time()-mstart,19*mround))
         logging.debug("关闭session")
         s.close()
 
