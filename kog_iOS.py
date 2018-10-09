@@ -13,10 +13,13 @@ logging.basicConfig(format='[%(asctime)s][%(name)s:%(levelname)s(%(lineno)d)][%(
 logging.getLogger("requests").setLevel(logging.WARNING)
 
 # 屏幕分辨率
-device_x, device_y = 1920, 1080
+# device_x, device_y = 1920, 1080
+device_x, device_y = 667, 375
+# 截图的分辨率
+base_x, base_y = 667, 375
 
 # 小号 60左右 da 30
-FIGHT_TIME = 30
+FIGHT_TIME = 50
 
 # 刷金币次数
 repeat_times = 175
@@ -29,29 +32,33 @@ s = c.session()
 # 按钮:再次挑战
 # (650,130) (710,310)
 def rechallenge_btn():
-    x = random.uniform(650,710)
-    y = random.uniform(130,310)
+    x1,y1=0,0
+    x2,y2=100,100
+    x = random.uniform(x1,x2)
+    y = random.uniform(y1,y2)
     logging.info("点击重新挑战按钮 [{},{}]".format(x,y))
     return (x,y)
 # 按钮:闯关 
 # (600,220)  (670,400)
 def start_btn():
-    x = random.uniform(600,670)
-    y = random.uniform(220,400)
-    logging.info("点击开始按钮 [{},{}]".format(x,y))
+    x1,y1=500,322
+    x2,y2=600,360
+    x = random.uniform(x1,x2)
+    y = random.uniform(y1,y2)
+    logging.info("点击闯关按钮 [{},{}]".format(tranX(x),tranY(y)))
     return (x,y)
 # 按钮: 平A 640,115 r=50
 def attack_btn():
-    return circle_btn(640,115,50)
+    return circle_btn(607,323,20)
 # 按钮: 技能1 660,345 r=35
 def skill_one_btn():
-    return circle_btn(660,345,35)
+    return circle_btn(495,330,10)
 # 按钮: 技能2 515,255 r=35
 def skill_two_btn():
-    return circle_btn(515,225,35)
+    return circle_btn(537,260,10)
 # 按钮: 技能3 435,120 r=35
 def skill_three_btn():
-    return circle_btn(435,120,35)
+    return circle_btn(605,220,10)
 
 def circle_btn(rx,ry,r):
     x=6666
@@ -107,12 +114,11 @@ def tap_screen(func):
     pair = func()
     x=pair[0]
     y=pair[1]
-    base_x, base_y = 1920, 1080
-    real_x = int(x / base_x * device_x)
-    real_y = int(y / base_y * device_y)
+    real_x = tranX(x)
+    real_y = tranY(y)
     # os.system('adb shell input tap {} {}'.format(real_x, real_y))
     logging.debug("tap ({},{})".format(real_x,real_y))
-    s.tap_hold(real_x, real_y, 20/1000 )
+    s.tap_hold(real_x, real_y, 200/1000 )
 
 
 def do_money_work():
@@ -135,6 +141,12 @@ def do_money_work():
     tap_screen(rechallenge_btn)
     sleep(2)
 
+def tranX(x):
+    return int(x / base_x * device_x)
+
+def tranY(y):
+    return int(y / base_y * device_y)
+
 
 if __name__ == '__main__':
     mstart = time.time()
@@ -148,6 +160,8 @@ if __name__ == '__main__':
                 logging.info("本次共进行{}轮游戏,总用时{}s,预计刷金币{}g".format(mround,(time.time()-mstart)/60,19*mround))
             except Exception as e:
                 print(e)
+        # for i in range(100):
+        #     tap_screen(start_btn)
     except KeyboardInterrupt as k:
         pass
     finally:
