@@ -12,14 +12,14 @@ logging.basicConfig(format='[%(asctime)s][%(name)s:%(levelname)s(%(lineno)d)][%(
                     level=logging.INFO)
 logging.getLogger("requests").setLevel(logging.WARNING)
 
-# 屏幕分辨率
+# 屏幕分辨率 该分辨率是通过wda的inspector得到的。
 # device_x, device_y = 1920, 1080
 device_x, device_y = 667, 375
 # 截图的分辨率
 base_x, base_y = 667, 375
 
 # 小号 60左右 da 30
-FIGHT_TIME = 50
+FIGHT_TIME = 30
 
 # 刷金币次数
 repeat_times = 175
@@ -32,8 +32,8 @@ s = c.session()
 # 按钮:再次挑战
 # (650,130) (710,310)
 def rechallenge_btn():
-    x1,y1=0,0
-    x2,y2=100,100
+    x1,y1=520,330
+    x2,y2=610,360
     x = random.uniform(x1,x2)
     y = random.uniform(y1,y2)
     logging.info("点击重新挑战按钮 [{},{}]".format(x,y))
@@ -41,8 +41,8 @@ def rechallenge_btn():
 # 按钮:闯关 
 # (600,220)  (670,400)
 def start_btn():
-    x1,y1=500,322
-    x2,y2=600,360
+    x1,y1=455,290
+    x2,y2=540,315
     x = random.uniform(x1,x2)
     y = random.uniform(y1,y2)
     logging.info("点击闯关按钮 [{},{}]".format(tranX(x),tranY(y)))
@@ -76,9 +76,9 @@ skill_cool_down_time = {
 }
 
 skill_cool_down = {
-    "skill_one_btn":8,
-    "skill_two_btn":14,
-    "skill_three_btn":25,
+    "skill_one_btn":4,
+    "skill_two_btn":4,
+    "skill_three_btn":4,
 }
 
 skills = {
